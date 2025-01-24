@@ -1,0 +1,5 @@
+1- build the image
+docker build -t ahmedyh1/time_app .
+
+2- push
+docker push ahmedyh1/time_app

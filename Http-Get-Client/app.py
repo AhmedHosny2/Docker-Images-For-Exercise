@@ -101,9 +101,9 @@ def get_user_ips():
                 parts = line.split(",")
                 logger.debug(f"Line {line_number} split into parts: {parts}")
 
-                if len(parts) != 2:
-                    logger.error(f"Malformed line {line_number} skipped: '{original_line}'")
-                    continue  # Skip malformed lines
+                # if len(parts) != 2:
+                #     logger.error(f"Malformed line {line_number} skipped: '{original_line}'")
+                #     continue  # Skip malformed lines
 
                 ip, uid = parts
                 ip = ip.strip()
@@ -114,11 +114,11 @@ def get_user_ips():
                 if not is_valid_ip(ip):
                     logger.error(f"Invalid IP format on line {line_number}: '{ip}'. Skipping.")
                     continue
-
-                # Validate UID
-                if not uid:
-                    logger.error(f"Empty UID on line {line_number}. Skipping.")
-                    continue
+                #
+                # # Validate UID
+                # if not uid:
+                #     logger.error(f"Empty UID on line {line_number}. Skipping.")
+                #     continue
 
                 users_ip.append(ip)
                 users_uid.append(uid)
