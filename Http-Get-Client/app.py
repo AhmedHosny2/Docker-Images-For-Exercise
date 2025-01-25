@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 # Configuration
 USER_IP_FILE = "/users_ip.txt"  # User's IP file in the root of the container
 PORT_FILE = "/port.txt"  # Port number file in the root of the container
+CONTAIERID_FILE ="/containerid.txt"
 CHECK_INTERVAL = 5  # Interval between GET requests, in seconds
 
 # Global Variables
@@ -43,35 +44,21 @@ def is_valid_ip(ip):
 
 
 def get_container_id():
-    """Retrieve the container ID."""
+    """Read the container  id from the containerid file."""
     try:
-        # Check for cgroup v2
-        with open("/proc/self/cgroup", "r") as f:
-            cgroup_content = f.read().strip()
-            logger.debug(f"cgroup content: {cgroup_content}")
-
-            # cgroup v2 will typically show `0::/`
-            if cgroup_content == "0::/":
-                logger.info("cgroup v2 detected. Falling back to hostname for container ID.")
-                return os.uname().nodename[:12]  # Hostname is often the container ID
-
-            # If not v2, attempt to parse cgroup v1 format
-            for line in cgroup_content.splitlines():
-                parts = line.strip().split("/")
-                if len(parts) > 1 and len(parts[-1]) >= 12:  # Check for container ID format
-                    container_id = parts[-1][:12]
-                    logger.info(f"Container ID found in cgroup: {container_id}")
-                    return container_id
-
-        logger.warning("Unable to determine container ID from cgroup.")
-        return "unknown"
+        with open(CONTAIERID_FILE, "r") as f:
+            containerID_content = f.read().strip()
+            logger.debug(f"Containerid file content: '{containerID_content}'")
+            logger.info(f"id  retrieved: {containerID_content}")
+            return containerID_content
 
     except FileNotFoundError:
-        logger.error("/proc/self/cgroup not found. Ensure this is running inside a container.")
-        return "unknown"
+        logger.error(f"Error: {CONTAIERID_FILE} not found.")
+        return None
     except Exception as e:
-        logger.error(f"Error retrieving container ID: {e}")
-        return "unknown"
+        logger.error(f"Unexpected error while reading {CONTAIERID_FILE}: {e}")
+        return None
+
 
 def get_user_ips():
     """Read the user's IPs and UIDs from the file."""
@@ -165,7 +152,7 @@ def on_successful_request(ip, uid, container_id):
             logger.debug(f"Action logged in /action_log.txt: '{log_entry.strip()}'")
 
         # Send API request to the server informing it that the action was completed
-        api_url = f"http://localhost:3000/api/ClientEvaluation/{uid}/{container_id}"
+        api_url = f"http://0.0.0.0:3000/api/ClientEvaluation/1/{container_id}/{ip}"
 
         logger.debug(f"Sending GET request to API URL: {api_url} ")
         response = requests.get(api_url)
