@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/DockerImagesForExercise.iml" filepath="$PROJECT_DIR$/.idea/DockerImagesForExercise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Http-Post-Auth-Header-Server/.idea/Http-Post-Auth-Header-Server.iml" filepath="$PROJECT_DIR$/Http-Post-Auth-Header-Server/.idea/Http-Post-Auth-Header-Server.iml" />
     </modules>
   </component>
 </project>
