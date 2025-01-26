@@ -44,6 +44,20 @@ def load_variables():
         logger.error(f"Unexpected error while reading {VARIABLES_FILE}: {e}")
         return None
 
+
+
+#  health get req on  /
+@app.route('/', methods=['GET'])
+def get_current_time():
+    now = datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    serverType = "python"
+    return jsonify({
+        "current_time": current_time,
+        "serverType": serverType,
+        "Exercise State": "Congratulations! You have successfully completed the exercise."
+    })
+
 @app.route('/get-secret-key', methods=['GET'])
 def get_auth_key():
     variables = load_variables()
