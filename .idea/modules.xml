@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/DockerImagesForExercise.iml" filepath="$PROJECT_DIR$/.idea/DockerImagesForExercise.iml" />
       <module fileurl="file://$PROJECT_DIR$/Http-Post-Auth-Header-Server/.idea/Http-Post-Auth-Header-Server.iml" filepath="$PROJECT_DIR$/Http-Post-Auth-Header-Server/.idea/Http-Post-Auth-Header-Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gRCP-server/.idea/gRCP-server.iml" filepath="$PROJECT_DIR$/gRCP-server/.idea/gRCP-server.iml" />
     </modules>
   </component>
 </project>
